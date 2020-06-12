@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/test/test",
+    "pages/task/task",
+    "pages/home/home",
+    "pages/print/print",
+    "pages/data_statistics/data_statistics"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "ColorUI",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white",
+	"onReachBottomDistance":50,
+	"enablePullDownRefresh":true
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#0081ff",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "打印",
+        "iconPath": "/images/tabbar/print.png",
+        "selectedIconPath": "/images/tabbar/print_cur.png"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "text": "任务",
+        "iconPath": "/images/tabbar/task.png",
+        "selectedIconPath": "/images/tabbar/task_cur.png"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "个人",
+        "iconPath": "/images/tabbar/personal.png",
+        "selectedIconPath": "/images/tabbar/personal_cur.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

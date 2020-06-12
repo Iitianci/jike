@@ -1,0 +1,32 @@
+/* pages/task/task.wxss */
+.cu-tag{
+	position: absolute;
+	right: 0;
+	top: 0;
+	border-bottom-left-radius: 6rpx;
+	padding: 6rpx 12rpx;
+	height: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.cu-item{
+	position: relative;
+}
+.title {
+	min-width: calc(5em + 30rpx);
+}
+/* .cuIcon-file{
+	word-break: break-all;
+} */
+.text-cut{
+	word-break: break-all;
+}
+.tflxed {
+	top: 55px;
+	position: fixed;
+	height: 200rpx;
+	height: 200rpx;
+	width: 100%;
+	z-index: 100;
+	background-color: #fff;
+
+}

@@ -1,0 +1,56 @@
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">即刻云印</view>
+</cu-custom>
+<view class="padding-xl bg-white radius shadow shadow-lg padding flex align-center justify-center" style="height:300rpx">
+  <view class="flex justify-center">
+	 <block wx:if="{{!hasUserInfo && canIUse}}" class="cu-avatar xl round solids">
+    <!-- <button  class='cu-btn round bg-green shadow' bindtap="login"> 点击登录 </button> -->
+		 <button  open-type="getUserInfo"  bindgetuserinfo="getuserInfo" class='cu-btn round bg-green shadow' bindtap="login"> 点击登录 </button>
+    </block>
+	<block wx:else>
+      <view class='text-center'>
+        <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
+        <view class="padding">{{userInfo.nickName}}</view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <view class="content" bindtap="scanCode">
+        <text class="cuIcon-scan text-grey"></text>
+        <text class="text-grey">扫码登录</text>
+      </view>
+    </view>
+	
+	<view class="cu-item arrow">
+	  <view class="content">
+	    <text class="cuIcon-group text-green"></text>
+	    <text class="text-grey">加入企业</text>
+	  </view>
+	</view>
+	
+	<view class="cu-item arrow">
+	  <view class="content" bindtap="data_statistics">
+	    <text class="cuIcon-rank text-yellow"></text>
+	    <text class="text-grey">数据统计</text>
+	  </view>
+	</view>
+	
+	<view class="cu-item arrow">
+	  <view class="content">
+	    <text class="cuIcon-pick text-blue"></text>
+	    <text class="text-grey">发送安全打印任务页</text>
+	  </view>
+	</view>
+
+  	<view class="cu-item arrow">
+	  <view class="content">
+	    <text class="cuIcon-service text-blue"></text>
+	    <text class="text-grey">反馈</text>
+	  </view>
+	</view>
+	
+	
+</view>

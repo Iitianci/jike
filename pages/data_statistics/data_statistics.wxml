@@ -1,0 +1,68 @@
+<cu-custom bgColor="bg-gradual-blue">
+	<view slot="content">即刻云印</view>
+</cu-custom>
+
+<view class="tfixed bg-gradual-blue" style="top:300rpx;">
+	<view class="padding-top-sm text-center">打印统计汇总 (时间范围:2020年4月1日~4月31日)</view>
+	<view class="flex">
+		<view class="flex-sub flex justify-center flex-direction align-center ">
+			<view class="padding-sm">
+				<text class="text-sl">0</text>
+			</view>
+			<view>
+				<text class="text-sm">打印张数</text>
+			</view>
+		</view>
+		<view class="flex-sub flex justify-center flex-direction align-center">
+			<view class="padding-sm">
+				<text class="text-sl">0</text>
+			</view>
+			<view>
+				<text class="text-sm">打印张数</text>
+			</view>
+		</view>
+		<view class="flex-sub flex justify-center flex-direction align-center">
+			<view class="padding-sm">
+				<text class="text-sl">0</text>
+			</view>
+			<view>
+				<text class="text-sm">打印张数</text>
+			</view>
+		</view>
+	</view>
+	<view class="padding-sm">
+		<button class="cu-btn block line-white" bindtap="check_data">
+			<text class=""></text> 查看统计信息</button>
+	</view>
+</view>
+
+<view class="margin-top-xs bg-white">
+	<view class="padding-sm">最近打印任务</view>
+	<scroll-view>
+
+	</scroll-view>
+</view>
+
+<view class="cu-item flex algin-center bg-white margin-sm padding-sm radius shadow" wx:for="{{taskLisk}}" wx:key>
+	<view class="flex-twice  flex-direction flex justify-center text-cut">
+		<view>
+			<view class="cuIcon-baby">单号:<text>{{item.ID}}</text></view>
+		</view>
+		<view>
+			<view class="cuIcon-tag">类型:<text>{{item.type}}</text></view>
+		</view>
+		<view>
+			<view class="cuIcon-time">时间:<text>{{item.time}}</text></view>
+		</view>
+		<view>
+			<view class="cuIcon-file">图片:<text>{{item.imgList.length}}张</text></view>
+		</view>
+		<view class="flex">
+			<view class="cuIcon-file ">文件:</view>
+			<view class="text-cut flex-twice text-left" >
+			<view  wx:for="{{item.fileList}}"  wx:for-item="file" wx:key="index"><text>{{file.name}}</text></view>
+			</view>
+		</view>
+	</view>
+	<view class="cu-tag shadow {{item.state=='已完成'?' text-green':'text-yellow'}}">{{item.state}}</view>
+</view>

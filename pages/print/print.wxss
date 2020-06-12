@@ -1,0 +1,49 @@
+/* pages/print/print.wxss */
+page{
+	background-color:#fff;
+}
+.foot{
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	z-index: 1024;
+	box-shadow: 0 -1rpx 6rpx rgba(0, 0, 0, 0.1)
+}
+.changeImg {
+  position: absolute;
+  /* left: 0; */
+  /* top: 80rpx; */
+  width: 100%;
+  bottom: 0;
+  border-bottom-left-radius: 6rpx;
+  padding: 6rpx 12rpx;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+
+}
+.cu-form-group input {
+	flex: 1;
+	font-size: 30rpx;
+	color: #555;
+	padding-right: 1rpx;
+}
+.ViewFile{
+  position: absolute;
+  /* left: 0; */
+  /* top: 80rpx; */
+  width: 100%;
+  bottom: 0;
+  border-bottom-left-radius: 6rpx;
+  padding: 6rpx 12rpx;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+
+}
+.copies{
+  width: 55rpx;
+}
+.bill{
+	width:220rpx;
+}

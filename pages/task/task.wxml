@@ -1,0 +1,68 @@
+<cu-custom bgColor="bg-gradual-blue">
+	<view slot="content">即刻云印</view>
+</cu-custom>
+
+<view class="cu-bar fixed" style="top: 120rpx; background-color: #fff;">
+	<scroll-view scroll-x class="nav text-center">
+		<view class="flex">
+			<view class="cu-item flex-sub {{0==TabCur?'text-blue cur':''}}" bindtap="tabSelect" data-id="0">
+				<text class="cuIcon-all"></text> 全部
+			</view>
+			<view class="cu-item flex-sub {{1==TabCur?'text-blue cur':''}}" bindtap="tabSelect" data-id="1">
+				<text class="cuIcon-countdown"></text> 待打印
+			</view>
+			<view class="cu-item flex-sub {{2==TabCur?'text-blue cur':''}}" bindtap="tabSelect" data-id="2">
+				<text class="cuIcon-squarecheck"></text> 已完成
+			</view>
+		</view>
+	</scroll-view>
+</view>
+<view style="height: 80rpx;width: 100%;"></view>
+<view class=" flex justify-center align-center text-grey flex-direction margin-top" wx:if="{{showList.length==0}}"
+ style="width: 100%;">
+	<image src="../../images/data/data.png" mode="widthFix"></image>
+	<view>
+		<text>暂时还没有打印任务内容</text>
+	</view>
+
+</view>
+
+<view style="border-bottom:2rpx dotted #aaaaaa; border-radius: 30rpx;" class="shadow margin padding" wx:for="{{showList}}" wx:key>
+	<view class="flex justify-between align-center margin-bottom-xs">
+		<view style="width: 50rpx;height: 50rpx;" class="justify-center align-center flex">
+			<image src="../../images/filetype/{{item.file_suffix}}.png" class="flex-sub" mode="widthFix" style="width: 50rpx;height: 50rpx;"></image>
+		</view>
+		<view class=" flex justify-center align-center round shadow light text-center line-black text-cut" style="max-width: 400rpx; height: 45rpx;"><text
+			 class="margin-lr-xs text-cut">{{item.file_name}}</text></view>
+		<view class="">
+			<view class=" round shadow  light text-center sm cu-btn {{item.status==0?'bg-yellow':'bg-green'}}">{{item.status==0?'等待打印':'已经完成'}}</view>
+		</view>
+	</view>
+
+	<view class="flex justify-between  align-center margin-bottom-xs">
+		<view class="">
+			<view class="text-sm text-grey">
+				<text class="margin-right">打印参数:</text>
+				<text class="margin-right">{{item.parameters}}</text>
+				<text class="margin-right">{{item.page_range}}页</text>
+			</view>
+		</view>
+
+		<view class="  round shadow  light text-center sm bg-blue cu-btn">
+			微信文件
+		</view>
+	</view>
+
+	<view class="flex justify-between  align-center margin-bottom-xs">
+		<view class="">
+			<view class="text-sm text-grey"><text class="margin-right">打印机名:</text><text>{{item.printer_name}}</text></view>
+		</view>
+	
+		<view class="  round shadow  light text-center sm  cu-btn {{item.print_mode==0?'bg-orange':'bg-olive'}}">
+			{{item.print_mode==0?'普通打印':'安全打印'}}
+		</view>
+	</view>
+
+</view>
+
+

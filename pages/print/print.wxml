@@ -1,0 +1,242 @@
+<view class="bg-white">
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">返回</view>
+		<view slot="content">即刻云印</view>
+	</cu-custom>
+
+	<block wx:if="{{id==0}}">
+
+		<view class="cu-form-group margin-top-sm" bindtap="showModal" data-target="DrawerModalL">
+			<view class="title">打印机 <text class="text-sm margin-left-xs">({{printerList.length}}台)</text></view>
+			<view>{{printer.show_name}}<text class="padding-left {{view_printer==true?'cuIcon-fold':'cuIcon-unfold'}}"></text></view>
+		</view>
+		<!-- 长Model形式展示打印机列表 -->
+		<view class="cu-modal drawer-modal margin-top-xl justify-start {{modalName=='DrawerModalL'?'show':''}}" bindtap="hide_printer_Modal">
+			<view class="cu-dialog basis-lg  margin-top-xl">
+				<view class="cu-list menu text-left margin-top-xl">
+					<!-- cu-item arrow -->
+					<view class="margin-top"></view>
+					<view wx:for="{{printerList}}" wx:key class="bg-white margin-top-xs  padding-top" bindtap="choice_printer"
+					 data-index="{{index}}">
+						<view class="flex justify-center align-center text-center">
+							<view class="flex-sub padding-left-xs">
+								<image src="{{item.img_url}}" mode="widthFix" style="width: 100rpx;"></image>
+							</view>
+
+							<view class="flex-treble">
+								<view class="flex-twice flex justify-center round shadow light text-center text-sm {{item.status==1?'line-blue':'line-grey'}}">{{item.show_name}}</view>
+								<view class=" flex padding-sm text-cut}}">
+									<view class="text-xxl  cuIcon-title {{item.status==1?'text-green':'text-grey'}}">
+										<view class="cu-tag {{item.status==1?'line-blue text-line':'line-grey text-grey'}}">{{item.status==1?'在线':'下线'}}</view>
+									</view>
+									<view class="">
+										<view class="cu-tag {{item.status==1?'line-blue':'line-grey'}}">{{item.color_type==1?'彩印':'黑白'}}</view>
+									</view>
+									<view class="">
+										<view class="cu-tag {{item.status==1?'line-blue':'line-grey'}}"><text wx:for="{{item.paper_type}}"
+											 wx:for-item="size">{{size}}</text></view>
+									</view>
+								</view>
+							</view>
+
+						</view>
+						<view class="flex">
+							<view class="flex-sub">
+								<view class="round shadow  light text-center text-sm {{item.status==1?'line-blue':'line-grey'}}">{{item.department_name}}</view>
+							</view>
+							<view class="flex-treble flex justify-center text-sm">需等待6min</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+
+
+		<view class="cu-bar btn-group">
+			<button class="cu-btn bg-green shadow-blur round fl" bindtap="ChooseFile">微信文件</button>
+			<button class="cu-btn bg-blue shadow-blur round fr" bindtap="ChooseImg">微信图片</button>
+		</view>
+
+		<view class=" flex justify-center align-center text-grey flex-direction " wx:if="{{taskList.length==0}}"
+		 style="width: 100%;">
+	
+			<image src="../../images/data/empty2.png" mode="widthFix"></image>
+			<view>
+				<text>暂时还没有打印任务内容,请添加</text>
+			</view>
+			
+		</view>
+		<view style="border-bottom:2rpx dotted #aaaaaa;" wx:for="{{taskList}}" wx:key="{{index}}">
+			<view class="flex">
+				<view class="basis-xs ">
+					<view class="flex align-center flex-direction justify-center">
+						<image src='{{taskList[index].imgUrl}}' mode='aspectFill' style="width:220rpx;height:160rpx" class="padding-xs shadow-blur"
+						 bindtap="ViewImg" data-url="{{taskList[0].path}}"></image>
+						<!-- <view class="cu-progress round xs striped active margin-xs">
+							<view class="bg-green" style="width:95%"></view>
+						</view> -->
+						<view class="text-xs text-grey text-cut" style="width: 150rpx;">
+							{{taskList[index].name}}
+						</view>
+
+						<view class="flex">
+							<view class="round shadow  light text-center sm line-green cu-btn margin-bottom-xs margin-right-xs" bindtap="ViewTask"
+							 data-url="{{taskList[index].path}}" data-type="{{taskList[index].type}}">预览</view>
+							<view class="round shadow  light text-center sm line-red cu-btn margin-bottom-xs" catchtap="DelTask" data-index="{{index}}">删除</view>
+						</view>
+						<view class="flex">
+							<view class="round shadow  light text-center sm  cu-btn margin-right-xs {{taskList[index].direction==0?'bg-blue text-white':'bg-grey shadow line-blue'}}"
+							 data-index="{{index}}" data-direction='0' bindtap="change_direction">纵向</view>
+							<view class="round shadow  light text-center sm  cu-btn {{taskList[index].direction==1?'bg-blue text-white':'bg-grey shadow lines-blue'}}"
+							 data-index="{{index}}" data-direction='1' bindtap="change_direction">横向</view>
+						</view>
+					</view>
+				</view>
+				<view class="basis-xl">
+					<view class="flex justify-between padding-top-xs padding-right-xs">
+						<view class="text-sm text-grey">
+							纸张尺寸
+						</view>
+						<view class="">
+							<view class="cu-btn sm text-xs  shadow {{taskList[index].paper_type=='A3'?'bg-blue text-white':'bg-green shadow line-blue'}} "
+							 data-size="A3" data-index="{{index}}" bindtap="changeSize">
+								A3
+							</view>
+							<view class="cu-btn sm shadow {{taskList[index].paper_type=='A4'?'bg-blue text-white':'bg-green shadow line-blue'}}"
+							 data-size="A4" bindtap="changeSize" data-index="{{index}}">
+								A4
+							</view>
+							<view class="cu-btn sm shadow {{taskList[index].paper_type=='A5'?'bg-blue text-white':'bg-green shadow line-blue'}}"
+							 data-size="A5" bindtap="changeSize" data-index="{{index}}">
+								A5
+							</view>
+						</view>
+					</view>
+
+					<view class="flex justify-between padding-top-xs padding-right-xs">
+						<view class="text-sm text-grey">打印份数</view>
+						<view>
+							<view class="flex cu-btn sm bg-white">
+								<view class="flex-sub  line-blue margin-right-xs" bindtap="changeCopies" data-index="{{index}}" data-copies="{{taskList[index].copies}}"
+								 data-option="sub">
+									<text class=" cuIcon-pullleft"></text>
+								</view>
+								<view class="flex-sub  line-blue margin-sm">
+									<input class="copies " maxlength="4" bindinput="bindKeyInput" type="number" value="{{taskList[index].copies}}"
+									 data-index="{{index}}" />
+								</view>
+								<view class="flex-sub  line-blue  margin-right-xs" bindtap="changeCopies" data-index="{{index}}" data-copies="{{taskList[index].copies}}"
+								 data-option="add">
+									<text class="cuIcon-pullright "></text>
+								</view>
+							</view>
+						</view>
+					</view>
+
+					<view class="flex justify-between padding-top-xs padding-right-xs">
+						<view class="text-sm text-grey">单/双面</view>
+						<view>
+							<view class="margin-right-sm">
+								<view class="cu-btn sm shadow {{taskList[index].side_type=='0'?'bg-blue text-white':'bg-green shadow line-blue'}}"
+								 bindtap="change_odd_even" data-side_type="0" data-index="{{index}}">
+									单面
+								</view>
+								<view class="cu-btn sm shadow {{taskList[index].side_type=='1'?'bg-blue text-white':'bg-green shadow line-blue'}}"
+								 bindtap="change_odd_even" data-side_type="1" data-index="{{index}}">
+									双面
+								</view>
+							</view>
+						</view>
+					</view>
+
+					<view class="flex justify-between padding-top-xs padding-right-xs">
+						<view class="text-sm text-grey">
+							色彩模式
+						</view>
+						<view>
+							<view class="margin-right-sm">
+								<view class="cu-btn sm shadow {{taskList[index].color_type=='1'?'bg-blue text-pink':'bg-green shadow line-pink'}}"
+								 bindtap="change_colour" data-color_type="1" data-index="{{index}}">
+									彩色
+								</view>
+								<view class="cu-btn sm shadow {{taskList[index].color_type=='0'?'bg-blue text-white':'bg-green shadow line-blue'}}"
+								 bindtap="change_colour" data-color_type="0" data-index="{{index}}">
+									黑白
+								</view>
+							</view>
+						</view>
+					</view>
+
+
+					<view class="flex justify-between padding-top-xs padding-right-xs">
+						<view class="text-sm text-grey">打印范围</view>
+						<view>
+							<view class="flex cu-btn sm bg-white">
+								<view class="flex-sub  line-blue margin-right-xs">
+									<input class="copies" maxlength="4" bindinput="changeRange" type="number" value="{{taskList[index].page_range_start}}"
+									 data-index="{{index}}" data-option="range_start" />
+								</view>
+								<view class="flex-sub  line-blue ">
+									~
+								</view>
+								<view class="flex-sub  line-blue  margin-right-xs">
+									<input class="copies" maxlength="4" bindinput="changeRange" type="number" value="{{taskList[index].page_range_end}}"
+									 data-index="{{index}}" data-option="range_end" />
+								</view>
+							</view>
+						</view>
+					</view>
+
+				</view>
+			</view>
+
+
+
+		</view>
+
+		<view style="height:240rpx"></view>
+	</block>
+
+
+	<block wx:if="{{id==2}}">
+
+	</block>
+	<view class="foot  bg-white ">
+		<view class="cu-bar bg-white">
+			<view class="action">
+				<text class=" text-blue"></text>安全扫码打印
+			</view>
+			<text class="cuIcon-info text-blue" wx:if="{{safe_mode==true}}">到打印机前扫码才开启打印</text>
+			<view class="action">
+				<!-- <text class="cuIcon-question margin text-yellow"></text> -->
+				<switch class="sm" bindchange="SetSafe"></switch>
+			</view>
+		</view>
+		<block wx:if="{{safe_mode==false}}"><button class="cu-btn bg-blue shadow-blur block lg margin" bindtap="common_print">普通打印</button></block>
+		<block wx:if="{{safe_mode==true}}"><button class="cu-btn bg-green shadow-blur block lg margin" bindtap="showModal"
+			 data-target="safe_info"><text class="cuIcon-safe"></text>安全打印</button></block>
+	</view>
+
+	<!-- 提示安全打印信息 -->
+	<view class="cu-modal {{modalName=='safe_info'?'show':''}}">
+		<view class="cu-dialog text-center align-center justify-center">
+			<view class="bg-img" style="background-image: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jike/3bca1940-7fda-11ea-b94e-47f67ecf8268.png');height:200px;">
+				<view class="cu-bar justify-end text-white">
+					<view class="action" bindtap="hideModal">
+						<text class="cuIcon-close "></text>
+					</view>
+				</view>
+			</view>
+			<view class="cu-bar bg-white">
+				<view class="action  flex-sub  solid-left text-red" bindtap="hideModal">去打印机前扫码,才启动打印</view>
+			</view>
+			<!-- <view class="cu-bar bg-white">
+				<view class="action margin-0 flex-sub  solid-left" bindtap="hideModal">返回</view>
+			</view> -->
+			<view class="cu-bar bg-white padding">
+				<view class="action  flex-sub  solid-left" bindtap="safe_print"><text class="cuIcon-scan cu-btn line-blue">创建打印任务</text></view>
+			</view>
+		</view>
+	</view>
+
+</view>

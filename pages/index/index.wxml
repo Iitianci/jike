@@ -1,0 +1,108 @@
+<cu-custom bgColor="bg-gradual-blue">
+	<view slot="content">即刻云印</view>
+</cu-custom>
+
+<view class="bg-white radius shadow shadow-lg padding">
+	<view class="flex align-center">
+		<view class='text-center flex-sub flex algin-center '>
+			<view class="  padding-sm">
+				<image src="{{company.logo_url}}" mode="widthFix" class="cu-avatar lg"></image>
+			</view>
+		</view>
+		<view class=" flex-treble text-center">
+			<view class="margin text-xl text-left">{{company.name}}</view>
+			<view class="margin text-left">
+				<picker bindchange="bindPickerChange" value="{{index}}" range="{{companyList}}"  range-key="name">
+					<view class="picker">
+						切换企业<text class="cuIcon-unfold"></text>
+					</view>
+				</picker>
+			</view>
+		</view>
+		<view class="flex-sub justify-between text-center" bindtap="scanCode">
+			<view class="text-sl text-grey">
+				<text class="cuIcon-scan"></text>
+			</view>
+			<view>
+				<text>扫码打印</text>
+			</view>
+		</view>
+	</view>
+</view>
+
+<view class="margin-top-xs text-center padding-lr-sm shadow">
+	<view class="bg-blue padding-sm light" bindtap="open_view_printer">当前有{{printerList.length}}台打印机可使用 <text class="{{view_printer==true?'cuIcon-fold':'cuIcon-unfold'}}"></text></view>
+	<scroll-view scroll-y="true" style="height: 300rpx;" class="padding-top-xs" wx:if="{{view_printer==true}}">
+		<view wx:for="{{printerList}}" wx:key class="bg-white margin-top-0">
+			<view class="flex padding-sm align-center">
+				<view class="flex-sub">
+					<image src="{{item.p_img}}" mode="widthFix" style="width: 120rpx;"></image>
+				</view>
+				<view class="text-left  flex-sub flex align-start flex-direction ">
+					<view><text class="text-lg">{{item.p_name}}</text></view>
+					<view class="flex align-center justify-center">
+						<view class="text-xxl {{item.statu=='在线'?'text-green':'text-grey'}}">
+							<text class="cuIcon-title"></text>
+						</view>
+						<text>{{item.statu}}</text>
+					</view>
+				</view>
+				<view class="flex-sub flex justify-center align-center flex-direction">
+					<view><text class="text-sm">{{item.department}}</text></view>
+					<view><text wx:for="{{item.pager_type}}" wx:for-item="pager_type">{{pager_type}} </text></view>
+					<view><text class="{{item.color_printing==true?'cuIcon-check text-green':' cuIcon-close text-black'}}">彩印</text></view>
+				</view>
+				<view class="text-right flex-sub text-sm"><text>有{{item.line_up}}人在排队</text></view>
+
+			</view>
+		</view>
+	</scroll-view>
+</view>
+
+<view class="margin padding-sm bg-white radius shadow shadow-lg margin-top-sm">
+	<view class="flex align-center">
+		<view class='text-center flex-sub flex algin-center '>
+			<view class="  padding-sm">
+				<view class="text-sl text-blue"><text class="cuIcon-file "></text></view>
+				<view class="text-sm">微信文件</view>
+			</view>
+		</view>
+		<view class=" flex-treble text-center">
+			<button class="cu-btn block line-blue lg margin round" bindtap="chooseFile">
+				<text class=""></text> 选择文件</button>
+			<text class="margin">图片/Word/PDF/Excel</text></view>
+	</view>
+</view>
+
+<view class="margin padding-sm bg-white radius shadow shadow-lg ">
+	<view class="flex align-center">
+		<view class='text-center flex-sub flex algin-center '>
+			<view class="  padding-sm">
+				<view class="text-sl text-blue"><text class="cuIcon-form "></text></view>
+				<view class="text-sm">审批单</view>
+			</view>
+		</view>
+		<view class=" flex-treble text-center">
+			<view class="cu-btn block line-blue lg margin round">
+				<input type="text" class="text-black" placeholder="输入单号" bindconfirm="printBill" />
+			</view>
+			<text class="margin">输入单号确认即可打印</text>
+		</view>
+	</view>
+</view>
+
+<view class="margin padding-sm bg-white radius shadow shadow-lg ">
+	<view class="flex align-center">
+		<view class='text-center flex-sub flex algin-center '>
+			<view class="  padding-sm">
+				<view class="text-sl text-blue"><text class="cuIcon-ticket "></text></view>
+				<view class="text-sm">电子发票</view>
+			</view>
+		</view>
+		<view class=" flex-treble text-center">
+			<button class="cu-btn block line-blue lg margin round" bindtap="printInvoice">
+				<text class=""></text> 立即打印</button>
+			<text class="margin">将打印微信中的发票</text>
+		</view>
+	</view>
+</view>
