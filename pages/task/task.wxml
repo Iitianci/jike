@@ -1,8 +1,8 @@
 <cu-custom bgColor="bg-gradual-blue">
-	<view slot="content">即刻云印</view>
+	<view slot="content">即刻微云印</view>
 </cu-custom>
 
-<view class="cu-bar fixed" style="top: 120rpx; background-color: #fff;">
+<view class="cu-bar fixed" style="top: 120rpx;height: 90rpx; background-color: #fff;">
 	<scroll-view scroll-x class="nav text-center">
 		<view class="flex">
 			<view class="cu-item flex-sub {{0==TabCur?'text-blue cur':''}}" bindtap="tabSelect" data-id="0">
@@ -17,9 +17,9 @@
 		</view>
 	</scroll-view>
 </view>
-<view style="height: 80rpx;width: 100%;"></view>
+<view style="height: 100rpx;width: 100%;"></view>
 <view class=" flex justify-center align-center text-grey flex-direction margin-top" wx:if="{{showList.length==0}}"
- style="width: 100%;">
+ style="width: 100%; height: 650rpx;">
 	<image src="../../images/data/data.png" mode="widthFix"></image>
 	<view>
 		<text>暂时还没有打印任务内容</text>

@@ -1,7 +1,7 @@
 <view class="bg-white">
 	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
 		<view slot="backText">返回</view>
-		<view slot="content">即刻云印</view>
+		<view slot="content">创建任务</view>
 	</cu-custom>
 
 	<block wx:if="{{id==0}}">
@@ -41,9 +41,6 @@
 
 						</view>
 						<view class="flex">
-							<view class="flex-sub">
-								<view class="round shadow  light text-center text-sm {{item.status==1?'line-blue':'line-grey'}}">{{item.department_name}}</view>
-							</view>
 							<view class="flex-treble flex justify-center text-sm">需等待6min</view>
 						</view>
 					</view>
@@ -51,20 +48,21 @@
 			</view>
 		</view>
 
-
+		<view class="flex-sub text-red bg-blue light">
+			<text class="cuIcon-infofill line-red  margin-lr text-white"></text><text class="text-white">您的文件将在打印之后删除!</text>
+		</view>
 		<view class="cu-bar btn-group">
 			<button class="cu-btn bg-green shadow-blur round fl" bindtap="ChooseFile">微信文件</button>
 			<button class="cu-btn bg-blue shadow-blur round fr" bindtap="ChooseImg">微信图片</button>
 		</view>
 
-		<view class=" flex justify-center align-center text-grey flex-direction " wx:if="{{taskList.length==0}}"
-		 style="width: 100%;">
-	
+		<view class=" flex justify-center align-center text-grey flex-direction " wx:if="{{taskList.length==0}}" style="width: 100%;height: 600rpx;">
+
 			<image src="../../images/data/empty2.png" mode="widthFix"></image>
 			<view>
 				<text>暂时还没有打印任务内容,请添加</text>
 			</view>
-			
+
 		</view>
 		<view style="border-bottom:2rpx dotted #aaaaaa;" wx:for="{{taskList}}" wx:key="{{index}}">
 			<view class="flex">
@@ -85,9 +83,9 @@
 							<view class="round shadow  light text-center sm line-red cu-btn margin-bottom-xs" catchtap="DelTask" data-index="{{index}}">删除</view>
 						</view>
 						<view class="flex">
-							<view class="round shadow  light text-center sm  cu-btn margin-right-xs {{taskList[index].direction==0?'bg-blue text-white':'bg-grey shadow line-blue'}}"
+							<view class="round shadow  light text-center sm  cu-btn margin-right-xs {{taskList[index].image_direction==0?'bg-blue text-white':'bg-grey shadow line-blue'}}"
 							 data-index="{{index}}" data-direction='0' bindtap="change_direction">纵向</view>
-							<view class="round shadow  light text-center sm  cu-btn {{taskList[index].direction==1?'bg-blue text-white':'bg-grey shadow lines-blue'}}"
+							<view class="round shadow  light text-center sm  cu-btn {{taskList[index].image_direction==1?'bg-blue text-white':'bg-grey shadow lines-blue'}}"
 							 data-index="{{index}}" data-direction='1' bindtap="change_direction">横向</view>
 						</view>
 					</view>

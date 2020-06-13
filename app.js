@@ -65,6 +65,7 @@ App({
               http.postRequest("/wx/user/info", prams,"x-www-form-urlencoded",
                 function (res) {
                   console.log("用户信息请求成功", res)
+				  that.globalData.canUse=true
                 },
                 function (err) {
                   console.log("请求失败", err)
@@ -95,6 +96,7 @@ App({
     userInfo: null,
     Environment: '',
     token: '',
-    userInfo: ''
+    userInfo: '',
+	canUse:false,
   }
 })

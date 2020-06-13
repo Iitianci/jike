@@ -1,5 +1,5 @@
 //index.js
-//获取应用实例
+import http from '../../utils/http.js'
 const app = getApp()
 
 Page({
@@ -10,8 +10,8 @@ Page({
 			console.log(res.target)
 		}
 		return {
-			title: '即刻云打印',
-			path: '/page/index/index'
+			title: '即刻微云印',
+			path: '/pages/index/index'
 		}
 	},
 	data: {
@@ -27,6 +27,28 @@ Page({
 		if(e.detail.userInfo){
 			console.log("用户允许获取用户信息",e.detail.userInfo)
 			app.globalData.userInfo=e.detail.userInfo
+			wx.getUserInfo({
+				success: res => {
+				  // 可以将 res 发送给后台解码出 unionId
+				  app.globalData.userInfo = res.userInfo
+				  // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+				  // 所以此处加入 callback 以防止这种情况
+				  if (this.userInfoReadyCallback) {
+				    this.userInfoReadyCallback(res)
+				  }
+				
+				  let prams = res
+				  let that=this
+				  http.postRequest("/wx/user/info", prams,"x-www-form-urlencoded",
+				    function (res) {
+				      console.log("用户信息请求成功", res)
+					  that.globalData.canUse=true
+				    },
+				    function (err) {
+				      console.log("请求失败", err)
+				    })         
+				}
+			})
 			this.setData({
 				userInfo:e.detail.userInfo,
 				hasUserInfo:true
@@ -37,24 +59,28 @@ Page({
 		}
 	},
 	get_user_info(e) {
-		console.log("获取用户信息")
-		wx.getUserInfo({
-			success: res => {
-				console.log("用户token:",  app.globalData.token)
-				wx.request({
-					url: 'https://api.didayunyin.com/scp/wx/user/info',
-					data: res,
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-						'Authorization': app.globalData.token
-					},
-					method: 'POST',
-					success: res => {
-						console.log(res)
-					}
-				})
-			}
-		})
+		// wx.getUserInfo({
+		// 	success: res => {
+		// 	  // 可以将 res 发送给后台解码出 unionId
+		// 	  app.globalData.userInfo = res.userInfo
+		// 	  // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+		// 	  // 所以此处加入 callback 以防止这种情况
+		// 	  if (this.userInfoReadyCallback) {
+		// 	    this.userInfoReadyCallback(res)
+		// 	  }
+			
+		// 	  let prams = res
+		// 	  let that=this
+		// 	  http.postRequest("/wx/user/info", prams,"x-www-form-urlencoded",
+		// 	    function (res) {
+		// 	      console.log("用户信息请求成功", res)
+		// 		  that.globalData.canUse=true
+		// 	    },
+		// 	    function (err) {
+		// 	      console.log("请求失败", err)
+		// 	    })         
+		// 	}
+		// })
 	},
 	//扫码二维码
 	scanCode() {

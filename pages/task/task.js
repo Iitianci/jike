@@ -22,8 +22,8 @@ Page({
 			console.log(res.target)
 		}
 		return {
-			title: '即刻云打印',
-			path: '/page/index/index'
+			title: '即刻微云印',
+			path: '/pages/index/index'
 		}
 	},
 	tabSelect(e) {
@@ -51,6 +51,7 @@ Page({
 	 */
 	loadData(pageNum) {
 		//获取个人打印任务列表
+		console.log("获取打印任表")
 		let prams = {
 			page: pageNum
 		}
@@ -103,6 +104,17 @@ Page({
 
 	},
 	onLoad: function(options) {
+		// this.loadData(this.data.page)
+	},
+	onShow(){
+		this.setData({
+			page: 1,
+			taskList:[],
+			waitList:[],
+			finishList:[],
+			showList:[]
+			
+		})
 		this.loadData(this.data.page)
 	},
 
@@ -111,7 +123,11 @@ Page({
 	 */
 	onPullDownRefresh: function() {
 		this.setData({
-			page: 1
+			page: 1,
+			taskList:[],
+			waitList:[],
+			finishList:[],
+			showList:[]
 		})
 		this.loadData(this.data.page)
 	},

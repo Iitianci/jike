@@ -8,7 +8,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		token: app.globalData.token,
+		token: wx.getStorageSync("token"),
 		taskList: [], //任务列表
 		safe_mode: false,
 		//默认数据
@@ -52,8 +52,8 @@ Page({
 			console.log(res.target)
 		}
 		return {
-			title: '即刻云打印',
-			path: '/page/index/index'
+			title: '即刻微云印',
+			path: '/pages/index/index'
 		}
 	},
 	//选择打印机

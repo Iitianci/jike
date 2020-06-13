@@ -8,7 +8,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		token: app.globalData.token,
+		token: wx.getStorageSync("token"),
 		taskList: [], //任务列表
 		safe_mode: false,
 		//默认数据
@@ -27,23 +27,7 @@ Page({
 			color_printing: '黑白',
 		},
 
-		printerList: [{
-				p_id: 2,
-				img_url: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jike/ac74d030-8625-11ea-b244-a9f5e5565f30.jpg',
-				status: 1,
-				color_type: 1,
-				department_name: "人事部",
-				show_name: '打印机1'
-			},
-			{
-				p_id: 3,
-				img_url: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-jike/ac74d030-8625-11ea-b244-a9f5e5565f30.jpg',
-				status: 1,
-				color_type: 1,
-				department_name: "人事部",
-				show_name: '打印机1'
-			}
-		]
+		printerList: []
 	},
 	//分享页面
 	onShareAppMessage: function(res) {
@@ -52,8 +36,8 @@ Page({
 			console.log(res.target)
 		}
 		return {
-			title: '即刻云打印',
-			path: '/page/index/index'
+			title: '即刻微云印',
+			path: '/pages/index/index'
 		}
 	},
 	//选择打印机
@@ -329,6 +313,8 @@ Page({
 				//设置图片默认参数
 				console.log("选择的图片", res)
 				let count = 0
+				let hasSuc= 0
+				let hasFail=0
 				for (let i = 0; i < res.tempFiles.length; i++) {
 					res.tempFiles[i].type = "img"
 					res.tempFiles[i].imgUrl = res.tempFiles[i].path
@@ -356,20 +342,21 @@ Page({
 							'Authorization': this.data.token,
 						},
 						formData: {
-							'name': new Date().getTime() + 'abc',
+							'name': new Date().getTime() + '.img',
 							'type': 1,
 							'suffix': 'img'
 						},
 						success: result => {
 							let data = result.data
 							let statusCode = result.statusCode
+							
 							if (statusCode == 200) {
 								// console.log("成功上传,返回data",JSON.parse(data))
 								let data1 = JSON.parse(data)
 								console.log("成功上传,返回data", data1)
 								console.log("fileID:", data1.data.id)
 								res.tempFiles[i].file_id = data1.data.id
-
+								hasSuc++
 								this.setData({
 									taskList: this.data.taskList.concat(res.tempFiles[i])
 								})
@@ -380,7 +367,7 @@ Page({
 								// })
 
 							} else {
-
+								hasFail++
 								// wx.showToast({
 								// 	title: "上传失败",
 								// 	icon: "none"
@@ -390,7 +377,7 @@ Page({
 							}
 						},
 						fail: err => {
-
+							hasFail++
 							// wx.showToast({
 							// 	title: "上传失败",
 							// 	icon: "none"
@@ -408,7 +395,7 @@ Page({
 							if (count == res.tempFiles.length) {
 								wx.hideLoading()
 								wx.showToast({
-									title: "全部处理完成",
+									title: "上传成功"+hasSuc+"个,失败"+hasFail+"个",
 									icon: "none"
 								})
 							}
@@ -423,7 +410,7 @@ Page({
 	//删除任务
 	DelTask(e) {
 		wx.showModal({
-			title: '删除图片',
+			title: '删除任务',
 			content: '确定要删除这个任务吗？',
 			cancelText: '取消',
 			confirmText: '确定',

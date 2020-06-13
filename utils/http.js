@@ -1,8 +1,6 @@
 /**
  * 请求头
  */
-var token = wx.getStorageSync("token")
-var expireTime = wx.getStorageSync('expireTime')
 const app = getApp()
 // var header = {
 //   'content-type': 'application/x-www-form-urlencoded',
@@ -14,10 +12,10 @@ const baseUrl = "https://api.didayunyin.com/scp"
  * 供外部post请求调用  
  */
 
-function get_token() {
+async function get_token() {
 	console.log("重新获取token")
-	wx.login({
-		success: res => {
+	await wx.login({
+		 success: res => {
 			if (res.code) {
 				//发起网络请求
 				console.log('code为', res)
@@ -25,7 +23,6 @@ function get_token() {
 					username: 'wx-' + res.code
 				}
 				let that = this
-
 				wx.request({
 					url: 'https://api.didayunyin.com/scp/user/login',
 					data: {
@@ -39,14 +36,19 @@ function get_token() {
 						console.log("重新获取token成功", res)
 						let token = res.data.data.token
 						let expireTime = res.data.data.expireTime //过期时间
-						app.globalData.token = token
-						app.globalData.expireTime = expireTime
+						// app.globalData.token = token
+						// app.globalData.expireTime = expireTime
 						wx.setStorageSync('token', token)
 						wx.setStorageSync('expireTime', expireTime)
 						console.log("token是:",token)
+						
 					},
 					fail: err => {
 						console.log("重新获取token失败", err)
+						wx.showToast({
+							title:err.errmsg,
+							icon:"none"
+						})
 					}
 				})
 			}
@@ -57,12 +59,15 @@ function get_token() {
 	})
 }
 
-
-function post(url, params, type, onSuccess, onFailed) {
+ 
+async function post(url, params, type, onSuccess, onFailed) {
 	let now_time = new Date().getTime()
+	let token = wx.getStorageSync("token")
+	let expireTime=wx.getStorageSync("expireTime")
 	console.log("请求方式：", "POST")
 	if (!token || now_time >= expireTime-600000) {
-		get_token()
+		console.log("token有问题",token)
+	  await	get_token()
 	}
 	request(url, params, "POST", type, onSuccess, onFailed);
 }
@@ -70,11 +75,14 @@ function post(url, params, type, onSuccess, onFailed) {
 /**
  * 供外部get请求调用
  */
-function get(url, params, type, onSuccess, onFailed) {
+async function get(url, params, type, onSuccess, onFailed) {
 	console.log("请求方式：", "GET")
 	let now_time = new Date().getTime()
+	let token = wx.getStorageSync("token")
+	let expireTime=wx.getStorageSync("expireTime")
 	if (!token || now_time >= expireTime-600000) {
-		get_token()
+		console.log("token有问题",token)
+		await get_token()
 	}
 	request(url, params, "GET", type, onSuccess, onFailed);
 }
@@ -91,10 +99,8 @@ function get(url, params, type, onSuccess, onFailed) {
 function request(url, params, method, type, onSuccess, onFailed) {
 	console.log('请求url：' + url);
 	let detialUrl = baseUrl + url
-	// wx.showLoading({
-	//   title: "正在加载中...",
-	// })
-	// type:x-www-form-urlencoded || json
+	let token = wx.getStorageSync("token")
+
 	wx.request({
 		url: detialUrl,
 		data: dealParams(params),
@@ -112,6 +118,10 @@ function request(url, params, method, type, onSuccess, onFailed) {
 				if (res.statusCode == 200) {
 					onSuccess(res.data); //request success
 				} else {
+					wx.showToast({
+						title:res.errMsg,
+						icon:"none"
+					})
 					onFailed(res.data.message); //request failed
 				}
 				/** end 处理结束*/

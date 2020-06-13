@@ -1,7 +1,7 @@
 <view class="bg-white">
 	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
 		<view slot="backText">返回</view>
-		<view slot="content">即刻云印</view>
+		<view slot="content">即刻微云印</view>
 	</cu-custom>
 
 	<block wx:if="{{id==0}}">

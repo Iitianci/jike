@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-gradual-blue">
-	<view slot="content">即刻云印</view>
+	<view slot="content">即刻微云印</view>
 </cu-custom>
 
 <view class="tfixed bg-gradual-blue" style="top:300rpx;">

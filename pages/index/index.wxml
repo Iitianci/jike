@@ -1,8 +1,8 @@
 <cu-custom bgColor="bg-gradual-blue">
-	<view slot="content">即刻云印</view>
+	<view slot="content">即刻微云印</view>
 </cu-custom>
-
-<view class="bg-white radius shadow shadow-lg padding">
+ 
+<view class="bg-white radius shadow shadow-lg padding" style="border-radius:0 0 20rpx 20rpx ;background-image: url({{bg_imag}});background-size: 100% auto;">
 	<view class="flex align-center">
 		<view class='text-center flex-sub flex algin-center '>
 			<view class="  padding-sm">
@@ -10,9 +10,9 @@
 			</view>
 		</view>
 		<view class=" flex-treble text-center">
-			<view class="margin text-xl text-left">{{company.name}}</view>
-			<view class="margin text-left">
-				<picker bindchange="bindPickerChange" value="{{index}}" range="{{companyList}}"  range-key="name">
+			<view class="margin  text-left flex justify-center align-center round shadow light text-center line-black bg-white text-black text-shadow">{{company.name}}</view>
+			<view class="margin text-left flex justify-center">
+				<picker bindchange="bindPickerChange" value="{{index}}" range="{{companyList}}"  range-key="name" disabled="{{!canUse}}">
 					<view class="picker">
 						切换企业<text class="cuIcon-unfold"></text>
 					</view>
@@ -20,10 +20,10 @@
 			</view>
 		</view>
 		<view class="flex-sub justify-between text-center" bindtap="scanCode">
-			<view class="text-sl text-grey">
+			<view class="text-sl text-white">
 				<text class="cuIcon-scan"></text>
 			</view>
-			<view>
+			<view class="text-white">
 				<text>扫码打印</text>
 			</view>
 		</view>
@@ -31,8 +31,8 @@
 </view>
 
 <view class="margin-top-xs text-center padding-lr-sm shadow">
-	<view class="bg-blue padding-sm light" bindtap="open_view_printer">当前有{{printerList.length}}台打印机可使用 <text class="{{view_printer==true?'cuIcon-fold':'cuIcon-unfold'}}"></text></view>
-	<scroll-view scroll-y="true" style="height: 300rpx;" class="padding-top-xs" wx:if="{{view_printer==true}}">
+	<view class="bg-blue  light round shadow " bindtap="open_view_printer">当前有{{printerList.length}}台打印机可使用</view>
+	<!-- <scroll-view scroll-y="true" style="height: 300rpx;" class="padding-top-xs" wx:if="{{view_printer==true}}">
 		<view wx:for="{{printerList}}" wx:key class="bg-white margin-top-0">
 			<view class="flex padding-sm align-center">
 				<view class="flex-sub">
@@ -56,53 +56,56 @@
 
 			</view>
 		</view>
-	</scroll-view>
+	</scroll-view> -->
 </view>
 
-<view class="margin padding-sm bg-white radius shadow shadow-lg margin-top-sm">
+<view class="margin padding-sm bg-white radius shadow shadow-lg margin-top-sm cu-card" style="border-radius: 20rpx;">
 	<view class="flex align-center">
 		<view class='text-center flex-sub flex algin-center '>
-			<view class="  padding-sm">
-				<view class="text-sl text-blue"><text class="cuIcon-file "></text></view>
-				<view class="text-sm">微信文件</view>
+			<view class="flex flex-direction justify-center align-center  padding-sm">
+				<!-- <view class="text-sl text-blue"><text class="cuIcon-file "></text></view> -->
+				<image src="../../images/icon/file.png" mode="widthFix" style="width: 120rpx;height: 120rpx;"></image>
+				<view class="text-black  text-shadow">微信文件</view>
 			</view>
 		</view>
 		<view class=" flex-treble text-center">
 			<button class="cu-btn block line-blue lg margin round" bindtap="chooseFile">
 				<text class=""></text> 选择文件</button>
-			<text class="margin">图片/Word/PDF/Excel</text></view>
+			<text class="margin text-gray">图片/Word/PDF/Excel</text></view>
 	</view>
 </view>
 
-<view class="margin padding-sm bg-white radius shadow shadow-lg ">
+<view class="margin padding-sm bg-white radius shadow shadow-lg " style="border-radius: 20rpx;;">
 	<view class="flex align-center">
 		<view class='text-center flex-sub flex algin-center '>
-			<view class="  padding-sm">
-				<view class="text-sl text-blue"><text class="cuIcon-form "></text></view>
-				<view class="text-sm">审批单</view>
+			<view class="flex flex-direction justify-center align-center  padding-sm">
+				<!-- <view class="text-sl text-blue"><text class="cuIcon-file "></text></view> -->
+				<image src="../../images/icon/authorization.png" mode="widthFix" style="width: 120rpx;height: 120rpx;"></image>
+				<view class="text-black  text-shadow">审批单</view>
 			</view>
 		</view>
 		<view class=" flex-treble text-center">
-			<view class="cu-btn block line-blue lg margin round">
-				<input type="text" class="text-black" placeholder="输入单号" bindconfirm="printBill" />
+			<view class="cu-btn block line-blue lg margin round" bindtap="printBill">
+				<input type="text" class="text-blue" placeholder="输入单号" bindconfirm="printBill" disabled="{{!canUse}}"/>
 			</view>
-			<text class="margin">输入单号确认即可打印</text>
+			<text class="margin text-gray">输入单号确认即可打印</text>
 		</view>
 	</view>
 </view>
 
-<view class="margin padding-sm bg-white radius shadow shadow-lg ">
+<view class="margin padding-sm bg-white radius shadow shadow-lg " style="border-radius: 20rpx;;">
 	<view class="flex align-center">
 		<view class='text-center flex-sub flex algin-center '>
-			<view class="  padding-sm">
-				<view class="text-sl text-blue"><text class="cuIcon-ticket "></text></view>
-				<view class="text-sm">电子发票</view>
+			<view class="flex flex-direction justify-center align-center  padding-sm">
+				<!-- <view class="text-sl text-blue"><text class="cuIcon-file "></text></view> -->
+				<image src="../../images/icon/invoice.png" mode="widthFix" style="width: 120rpx;height: 120rpx;"></image>
+				<view class="text-black  text-shadow">电子发票</view>
 			</view>
 		</view>
 		<view class=" flex-treble text-center">
 			<button class="cu-btn block line-blue lg margin round" bindtap="printInvoice">
 				<text class=""></text> 立即打印</button>
-			<text class="margin">将打印微信中的发票</text>
+			<text class="margin text-gray">将打印微信中的发票</text>
 		</view>
 	</view>
 </view>
